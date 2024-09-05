@@ -26,16 +26,21 @@ type Headers struct {
 }
 
 type Config struct {
-	ListenAddr         string          `yaml:"listen_addr"`
-	Rules              map[string]Rule `yaml:"rules"`
-	LogLevel           string          `yaml:"log_level"`
-	UseSystemHosts     bool            `yaml:"use_system_hosts"`
-	DNSCacheDuration   time.Duration   `yaml:"dns_cache_duration"`
-	ParentProxy        string          `yaml:"parent_proxy"`
-	VerifyServerCert   bool            `yaml:"verify_server_cert"`
-	CopyRealCertStatus bool            `yaml:"copy_real_cert_status"`
-	mu                 sync.RWMutex
-	parentProxyURL     *url.URL
+	ListenAddr          string          `yaml:"listen_addr"`
+	Rules               map[string]Rule `yaml:"rules"`
+	LogLevel            string          `yaml:"log_level"`
+	UseSystemHosts      bool            `yaml:"use_system_hosts"`
+	DNSCacheDuration    time.Duration   `yaml:"dns_cache_duration"`
+	ParentProxy         string          `yaml:"parent_proxy"`
+	VerifyServerCert    bool            `yaml:"verify_server_cert"`
+	CopyRealCertStatus  bool            `yaml:"copy_real_cert_status"`
+	EnableOCSP          bool            `yaml:"enable_ocsp"`
+	EnableCRL           bool            `yaml:"enable_crl"`
+	OCSPTimeout         time.Duration   `yaml:"ocsp_timeout"`
+	CRLTimeout          time.Duration   `yaml:"crl_timeout"`
+	CertCacheExpiration time.Duration   `yaml:"cert_cache_expiration"`
+	mu                  sync.RWMutex
+	parentProxyURL      *url.URL
 }
 
 func Load(path string) (*Config, error) {

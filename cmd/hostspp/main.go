@@ -17,7 +17,8 @@ import (
 	"flag"
 	"hosts++/internal/api"
 	"hosts++/internal/config"
-	"hosts++/internal/proxy"
+	"hosts++/internal/handler"
+	"hosts++/internal/systrust"
 	"hosts++/pkg/certificate"
 	"hosts++/pkg/logger"
 	"net/http"
@@ -56,16 +57,21 @@ func main() {
 		cfg.ListenAddr = listenAddr
 	}
 
-	// 生成并保存 CA 证书
+	// 获取 CA 证书
 	caCertPEM := certificate.GetRootCAPEM()
-	if err := os.WriteFile("ca.crt", caCertPEM, 0644); err != nil {
-		log.Error("Failed to save CA certificate: %v", err)
-		os.Exit(1)
-	}
-	log.Info("CA certificate saved to ca.crt")
 
-	// 创建代理服务器
-	p := proxy.New(cfg)
+	// 删除旧的系统信任证书（如果存在）
+	if err := systrust.RemoveOldSystemCert(); err != nil {
+		log.Warn("Failed to remove old system certificate: %v", err)
+	}
+
+	// 添加新的系统信任 CA 证书
+	if err := systrust.AddNewSystemCert(caCertPEM); err != nil {
+		log.Warn("Failed to add new system certificate: %v", err)
+	}
+
+	// 创建处理器
+	h := handler.New(cfg)
 
 	// 创建 API 服务
 	apiServer := api.New(cfg)
@@ -73,9 +79,13 @@ func main() {
 	// 创建 HTTP 服务器
 	mux := http.NewServeMux()
 	apiServer.RegisterRoutes(mux)
+
+	// 使用 WithAPIHandler 方法来组合 API 处理器和主处理器
+	combinedHandler := h.WithAPIHandler(mux)
+
 	server := &http.Server{
 		Addr:    cfg.ListenAddr,
-		Handler: p.WithAPIHandler(mux),
+		Handler: combinedHandler,
 	}
 
 	// 启动服务器

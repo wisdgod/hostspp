@@ -1,8 +1,8 @@
 listen_addr: ":8080"
-log_level: "info"
+log_level: "debug"
 use_system_hosts: true
 dns_cache_duration: "5m"
-parent_proxy: "http://parent-proxy.example.com:8080"
+parent_proxy: "http://127.0.0.1:2080"
 verify_server_cert: true
 copy_real_cert_status: true
 rules:
@@ -12,11 +12,22 @@ rules:
     fake_hosts: ["example.com:443"]
     real_hosts: ["www.google.com:443"]
     proxy_websocket: true
+  testc_rule:
+    type: "single-to-single"
+    enabled: true
+    fake_hosts: ["api.openai.com:443"]
+    real_hosts: ["my-api.wisdgod.com:443"]
+    proxy_websocket: true
+  test_rule:
+    type: "single-to-single"
+    enabled: true
+    fake_hosts: ["termux.com:443"]
+    real_hosts: ["t.987452.xyz:443"]
     headers:
       request:
-        "User-Agent": "Custom User Agent"
-      response:
-        "Server": "Custom Server"
+        "Origin": "https://t.987452.xyz"
+        "Referer": "https://t.987452.xyz/"
+    proxy_websocket: true
   multi_to_single_rule:
     type: "multi-to-single"
     enabled: true
