@@ -1,0 +1,41 @@
+listen_addr: ":8080"
+log_level: "info"
+use_system_hosts: true
+dns_cache_duration: "5m"
+parent_proxy: "http://parent-proxy.example.com:8080"
+verify_server_cert: true
+copy_real_cert_status: true
+rules:
+  example_rule:
+    type: "single-to-single"
+    enabled: true
+    fake_hosts: ["example.com:443"]
+    real_hosts: ["www.google.com:443"]
+    proxy_websocket: true
+    headers:
+      request:
+        "User-Agent": "Custom User Agent"
+      response:
+        "Server": "Custom Server"
+  multi_to_single_rule:
+    type: "multi-to-single"
+    enabled: true
+    fake_hosts: ["example1.com:443", "example2.com:443"]
+    real_hosts: ["www.bing.com:443"]
+    proxy_websocket: false
+  single_to_multi_rule:
+    type: "single-to-multi"
+    enabled: true
+    fake_hosts: ["example3.com:443"]
+    real_hosts: ["www.google.com:443", "www.bing.com:443", "www.yahoo.com:443"]
+    proxy_websocket: true
+  regex_rule:
+    type: "multi-to-multi"
+    enabled: true
+    pattern: "^(.+)\\.example\\.com:443$"
+    replacement: "${1}.google.com:443"
+    proxy_websocket: true
+    headers:
+      request:
+        "Origin": ""
+        "Referer": ""
