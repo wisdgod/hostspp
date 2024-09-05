@@ -1,0 +1,28 @@
+listen_addr: ":8080"
+log_level: "info"
+rules:
+  example_rule:
+    type: "single-to-single"
+    fake_hosts: ["example.com:443"]
+    real_hosts: ["www.google.com:443"]
+    headers:
+      request:
+        "User-Agent": "Custom User Agent"
+      response:
+        "Server": "Custom Server"
+  multi_to_single_rule:
+    type: "multi-to-single"
+    fake_hosts: ["example1.com:443", "example2.com:443"]
+    real_hosts: ["www.bing.com:443"]
+  single_to_multi_rule:
+    type: "single-to-multi"
+    fake_hosts: ["example3.com:443"]
+    real_hosts: ["www.google.com:443", "www.bing.com:443", "www.yahoo.com:443"]
+  regex_rule:
+    type: "multi-to-multi"
+    pattern: "^(.+)\\.example\\.com:443$"
+    replacement: "${1}.google.com:443"
+    headers:
+      request:
+        "Origin": ""
+        "Referer": ""

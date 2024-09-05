@@ -36,7 +36,13 @@ graph LR
 
 ### Disclaimer
 
-This project is for research and learning purposes only. Users are responsible for compliance with applicable laws and regulations.
+This project (Hosts++) is intended for educational and research purposes only. Users must comply with all applicable local, national, and international laws and regulations.
+
+The authors and contributors of this software are not responsible for any direct or indirect damages or losses arising from its use. Users assume all risks associated with the use of this software.
+
+It is strictly prohibited to use this software for any illegal or harmful activities. The authors reserve the right to revoke usage rights if any misuse is discovered.
+
+By using this software, you acknowledge that you have read, understood, and agreed to all terms of this disclaimer.
 
 ## 中文
 
@@ -72,4 +78,10 @@ graph LR
 
 ### 免责声明
 
-本项目仅供研究和学习使用。用户需自行遵守适用的法律法规。
+本项目（Hosts++）仅供教育和研究目的使用。使用者应当遵守所有适用的本地、国家和国际法律法规。
+
+作者和贡献者不对因使用本软件而直接或间接导致的任何损失或损害承担责任。使用者应自行承担使用本软件的所有风险。
+
+严禁将本软件用于任何非法或有害活动。作者保留在发现滥用行为时撤销使用权的权利。
+
+使用本软件即表示您已阅读、理解并同意本免责声明的所有条款。
