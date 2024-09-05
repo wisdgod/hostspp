@@ -1,10 +1,12 @@
 module hosts++
 
-go 1.22.6
+go 1.23.0
 
 require (
-	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
+	github.com/gorilla/websocket v1.5.3
+	golang.org/x/exp v0.0.0-20240904232852-e7e105dedf7e
+	golang.org/x/net v0.29.0
 	gopkg.in/yaml.v3 v3.0.1
-	software.sslmate.com/src/go-pkcs12 v0.4.0
 )
+
+require golang.org/x/text v0.18.0 // indirect
