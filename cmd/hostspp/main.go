@@ -1,3 +1,16 @@
+/*
+Hosts++
+Copyright (C) 2024 wisdgod
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the Apache License 2.0.
+
+Disclaimer: This software is for educational purposes only. Use at your own risk.
+The authors are not responsible for any misuse or damages.
+
+免责声明：本软件仅供教育目的使用。使用者自担风险。作者不对任何滥用或损害负责。
+*/
+
 package main
 
 import (

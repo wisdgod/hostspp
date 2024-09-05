@@ -20,10 +20,10 @@ const (
 )
 
 var levelColors = map[LogLevel]string{
-	LevelError: "\033[1;31m",
-	LevelWarn:  "\033[1;33m",
-	LevelInfo:  "\033[1;32m",
-	LevelDebug: "\033[1;34m",
+	LevelError: "\033[1;31m", // 红色
+	LevelWarn:  "\033[1;33m", // 黄色
+	LevelInfo:  "\033[1;32m", // 绿色
+	LevelDebug: "\033[1;34m", // 蓝色
 }
 
 var levelPrefixes = map[LogLevel]string{
@@ -82,20 +82,26 @@ func (l *Logger) log(level LogLevel, format string, v ...interface{}) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 
+	// 获取调用者的文件名和行号
 	_, file, line, ok := runtime.Caller(2)
 	if !ok {
 		file = "???"
 		line = 0
 	}
 
+	// 构建日志前缀
 	prefix := fmt.Sprintf("%s:%d", file, line)
+
+	// 构建日志消息
 	msg := fmt.Sprintf(format, v...)
 
+	// 添加颜色（如果启用）
 	levelString := levelPrefixes[level]
 	if l.color {
 		levelString = fmt.Sprintf("%s%s\033[0m", levelColors[level], levelString)
 	}
 
+	// 输出日志
 	l.logger.Printf("%s [%s] %s", prefix, levelString, msg)
 }
 
